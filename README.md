@@ -28,7 +28,9 @@ You can override the colors with the `--fill` and `--stroke` options respectivel
 
 To generate an additional image with a transparent polygon and opaque stroke specify the `--outline` option.
 `--outline` takes an optional color parameter (defaults to black):
+
 `--outline rgb(255,0,0)
+
 --outline red`
 
 
