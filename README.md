@@ -26,6 +26,12 @@ python shp2png.py <SHAPEFILE NAME> -f [<ATTRIBUTE NAME>] -o <OUTPUT PREFIX>
 The polygon fill and stroke colors are white by default. 
 You can override the colors with the `--fill` and `--stroke` options respectively.
 
+To generate an additional image with a transparent polygon and opaque stroke specify the `--outline` option.
+`--outline` takes an optional color parameter:
+`--outline rgb(255,0,0)` 
+`--outline red`
+
+
 The default image width is `4333` (pixels). 
 You can override this with the `--width` option.
 
