@@ -18,6 +18,7 @@ Group by constraints look like attribute filters,
 but are surrounded by [square brackets] and do not have attribute values.
 
 The syntax for a "group by" constraint is as followed:
+
 `
 python shp2png.py <SHAPEFILE NAME> -f [<ATTRIBUTE NAME>] -o <OUTPUT PREFIX>
 `
