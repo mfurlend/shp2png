@@ -1,7 +1,7 @@
 shp2png
 =======
 
-shp2png.py - Creates a `.png` image from a shapefile.
+Creates a `.png` image from a shapefile.
 By default it will draw all polygons in the shapefile.
 You can specify which polygon you want to draw by providing
 an `attribute filter`. 
