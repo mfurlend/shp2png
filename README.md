@@ -29,8 +29,10 @@ You can override the colors with the `--fill` and `--stroke` options respectivel
 The default image width is `4333` (pixels). 
 You can override this with the `--width` option.
 
+This script requires the Python Imaging Library. 
+To to install it run `pip install PIL` or `easy_install PIL`
+
  author: Mike Furlender
  date: 20140910
 
-This script requires the Python Imaging Library.
   mfurlend AT gmail DOT com
