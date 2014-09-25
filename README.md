@@ -29,7 +29,8 @@ You can override the colors with the `--fill` and `--stroke` options respectivel
 The default image width is `4333` (pixels). 
 You can override this with the `--width` option.
 
-author: mfurlend AT gmail DOT com
-date: 20140910
+ author: Mike Furlender
+ date: 20140910
 
 This script requires the Python Imaging Library.
+  mfurlend AT gmail DOT com
