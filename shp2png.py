@@ -31,45 +31,7 @@ def show_attribute_table(r):
       print_or_fout((item+"\t").expandtabs(tab_lens[i]))
     print_or_fout("\n")
   
-  
-parser = argparse.ArgumentParser(description="Produce .png image from shapefile. Optionally filter by attribute value(s).")
-
-parser.add_argument('input' ,help='input filename (without .shp)')
-parser.add_argument('-o','--output', default=False, required=False, help='output filename (without .png)')
-parser.add_argument('-w', '--width', type=int, default=4333)
-parser.add_argument('--fill', type=str, default='rgb(255, 255, 255)', help="polygon fill color. defaults to \"rgb(255, 255, 255)\"")
-parser.add_argument('--stroke', type=str, default='rgb(255, 255, 255)', help="polygon stroke color. defaults to \"rgb(255, 255, 255)\"")
-parser.add_argument('--outline', type=str, nargs="?", default=False, help="show outline. takes optional color parameter. defaults to \"rgb(0, 0, 0)\"")
-parser.add_argument('-f',  '--filter', nargs='*', action='append', default=[], help='include features matched by this key-value pair')
-parser.add_argument('--fields', default=False, action='store_true', help = 'output the attribute fields')
-parser.add_argument('--table', default=False, action='store_true', help = 'output the attribute table')
-
-args = vars(parser.parse_args())
-if args['outline'] == False:
-  args['outline'] = 'rgb(0, 0, 0)'
-  
-myshp = open(args['input']+".shp", "rb")
-mydbf = open(args['input']+".dbf", "rb")
-r = shapefile.Reader(shp=myshp, shx=None, dbf=mydbf)
-
-if args['fields'] or args['table']:
-  if args['output']:
-    clear_file()
-  if args['table']==False:
-      tab_len = longest_len(fields=[y[0] for y in r.fields if y[0] !='DeletionFlag'])
-  else:
-      tab_len = longest_len([x for rec in r.records() for x in rec])
-  if args['fields']:
-    show_attribute_columns(r)
-  if args['table']:
-    show_attribute_table(r)
-else:
-  if args['output'] == False:
-    parser.error('argument -o/--output is required')
-  else:
-    process()
-
-def process():
+def process(r):
 
   iwidth = args['width']
   # end if
@@ -87,6 +49,8 @@ def process():
       group_bys = list(set([x[y] for x in r.records() for y in groupby_idxs if x[y].replace(' ','') != ''])) #unique values in group by clause
     else:
       group_bys = ['']
+  else:
+    group_bys = ['']
     # end if  
   # end if
 
@@ -185,4 +149,40 @@ def process():
     if args['outline'] != False:
       img2.save(args['output']+"_"+group_by+"_lines.png")
     # end if
+  
+parser = argparse.ArgumentParser(description="Produce .png image from shapefile. Optionally filter by attribute value(s).")
 
+parser.add_argument('input' ,help='input filename (without .shp)')
+parser.add_argument('-o','--output', default=False, required=False, help='output filename (without .png)')
+parser.add_argument('-w', '--width', type=int, default=4333)
+parser.add_argument('--fill', type=str, default='rgb(255, 255, 255)', help="polygon fill color. defaults to \"rgb(255, 255, 255)\"")
+parser.add_argument('--stroke', type=str, default='rgb(255, 255, 255)', help="polygon stroke color. defaults to \"rgb(255, 255, 255)\"")
+parser.add_argument('--outline', type=str, nargs="?", default=False, help="show outline. takes optional color parameter. defaults to \"rgb(0, 0, 0)\"")
+parser.add_argument('-f',  '--filter', nargs='*', action='append', default=[], help='include features matched by this key-value pair')
+parser.add_argument('--fields', default=False, action='store_true', help = 'output the attribute fields')
+parser.add_argument('--table', default=False, action='store_true', help = 'output the attribute table')
+
+args = vars(parser.parse_args())
+if args['outline'] == False:
+  args['outline'] = 'rgb(0, 0, 0)'
+  
+myshp = open(args['input']+".shp", "rb")
+mydbf = open(args['input']+".dbf", "rb")
+r = shapefile.Reader(shp=myshp, shx=None, dbf=mydbf)
+
+if args['fields'] or args['table']:
+  if args['output']:
+    clear_file()
+  if args['table']==False:
+      tab_len = longest_len(fields=[y[0] for y in r.fields if y[0] !='DeletionFlag'])
+  else:
+      tab_len = longest_len([x for rec in r.records() for x in rec])
+  if args['fields']:
+    show_attribute_columns(r)
+  if args['table']:
+    show_attribute_table(r)
+else:
+  if args['output'] == False:
+    parser.error('argument -o/--output is required')
+  else:
+    process(r)
